@@ -15,17 +15,24 @@ if TYPE_CHECKING:
     from .coordinator import BlueprintDataUpdateCoordinator
     from .data import IntegrationBlueprintConfigEntry
 
-ENTITY_DESCRIPTIONS = (
+
+# Define all sensors here
+ENTITY_DESCRIPTIONS: tuple[SensorEntityDescription, ...] = (
     SensorEntityDescription(
         key="integration_blueprint",
-        name="Integration Sensor",
+        name="Integration Sensor ASS",
         icon="mdi:format-quote-close",
+    ),
+    SensorEntityDescription(
+        key="wallet",
+        name="Wallet",
+        icon="mdi:wallet",
     ),
 )
 
 
 async def async_setup_entry(
-    hass: HomeAssistant,  # noqa: ARG001 Unused function argument: `hass`
+    hass: HomeAssistant,
     entry: IntegrationBlueprintConfigEntry,
     async_add_entities: AddEntitiesCallback,
 ) -> None:
@@ -40,18 +47,27 @@ async def async_setup_entry(
 
 
 class IntegrationBlueprintSensor(IntegrationBlueprintEntity, SensorEntity):
-    """integration_blueprint Sensor class."""
+    """Integration Blueprint Sensor class."""
 
     def __init__(
         self,
         coordinator: BlueprintDataUpdateCoordinator,
         entity_description: SensorEntityDescription,
     ) -> None:
-        """Initialize the sensor class."""
         super().__init__(coordinator)
         self.entity_description = entity_description
 
     @property
+    def unique_id(self) -> str:
+        """Return a unique ID for this sensor."""
+        # Combine the entry_id (integration instance) with the sensor key
+        return f"{self.coordinator.config_entry.entry_id}_{self.entity_description.key}"
+
+    @property
     def native_value(self) -> str | None:
-        """Return the native value of the sensor."""
-        return self.coordinator.data.get("body")
+        """Return the native value depending on the sensor type."""
+        if self.entity_description.key == "integration_blueprint":
+            return self.coordinator.data.get("diskSpace", {}).get("used")
+        if self.entity_description.key == "wallet":
+            return self.coordinator.data.get("wallet")
+        return None

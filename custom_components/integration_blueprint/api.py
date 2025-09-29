@@ -40,30 +40,30 @@ class IntegrationBlueprintApiClient:
 
     def __init__(
         self,
-        username: str,
-        password: str,
+        host: str,
+        port: int,
         session: aiohttp.ClientSession,
     ) -> None:
         """Sample API Client."""
-        self._username = username
-        self._password = password
+        self._host = host
+        self._port = port
         self._session = session
 
     async def async_get_data(self) -> Any:
         """Get data from the API."""
         return await self._api_wrapper(
             method="get",
-            url="https://jsonplaceholder.typicode.com/posts/1",
+            url=f"http://{self._host}:{int(self._port)}/api/sno/",
         )
 
-    async def async_set_title(self, value: str) -> Any:
-        """Get data from the API."""
-        return await self._api_wrapper(
-            method="patch",
-            url="https://jsonplaceholder.typicode.com/posts/1",
-            data={"title": value},
-            headers={"Content-type": "application/json; charset=UTF-8"},
-        )
+    #    async def async_set_title(self, value: str) -> Any:
+    #        """Get data from the API."""
+    #        return await self._api_wrapper(
+    #            method="patch",
+    #            url="https://jsonplaceholder.typicode.com/posts/1",
+    #            data={"title": value},
+    #            headers={"Content-type": "application/json; charset=UTF-8"},
+    #        )
 
     async def _api_wrapper(
         self,
