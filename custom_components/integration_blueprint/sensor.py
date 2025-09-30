@@ -45,6 +45,12 @@ ENTITY_DESCRIPTIONS: tuple[SensorEntityDescription, ...] = (
         icon="mdi:harddisk",
     ),
     SensorEntityDescription(
+        key="disk_use_percentage",
+        name="Disk Use Percentage",
+        native_unit_of_measurement="%",
+        icon="mdi:harddisk",
+    ),
+    SensorEntityDescription(
         key="nodeid",
         name="Node ID",
         icon="mdi:eye",
@@ -77,13 +83,13 @@ ENTITY_DESCRIPTIONS: tuple[SensorEntityDescription, ...] = (
     ),
     SensorEntityDescription(
         key="bandwidth_egress",
-        name="Bandwidth used this month",
+        name="Bandwidth Egress this month",
         native_unit_of_measurement="GB",
         icon="mdi:chart-line",
     ),
     SensorEntityDescription(
         key="bandwidth_ingress",
-        name="Bandwidth used this month",
+        name="Bandwidth Ingress this month",
         native_unit_of_measurement="GB",
         icon="mdi:chart-line",
     ),
@@ -143,6 +149,10 @@ class IntegrationBlueprintSensor(IntegrationBlueprintEntity, SensorEntity):
         if self.entity_description.key == "diskspace_free":
             disk_free = disk_available - disk_used - disk_trash
             return round(float(disk_free / 1000000000), 2)
+        # disk use %
+        if self.entity_description.key == "disk_use_percentage":
+            disk_used_percent = ((disk_used + disk_trash) / disk_available) * 100
+            return round(float(disk_used_percent), 2)
         # ---
         if self.entity_description.key == "wallet":
             return self.coordinator.data["sno"].get("wallet")
@@ -166,6 +176,22 @@ class IntegrationBlueprintSensor(IntegrationBlueprintEntity, SensorEntity):
         if self.entity_description.key == "bandwidth_used":
             bandwidth_used_raw = (
                 self.coordinator.data["sno"].get("bandwidth", {}).get("used")
+            )
+            if bandwidth_used_raw is not None:
+                bandwidth_used_gb = bandwidth_used_raw / 1000000000
+                return round(float(bandwidth_used_gb), 2)
+        # bandwidth_egress
+        if self.entity_description.key == "bandwidth_egress":
+            bandwidth_used_raw = self.coordinator.data["satellites"].get(
+                "egressSummary"
+            )
+            if bandwidth_used_raw is not None:
+                bandwidth_used_gb = bandwidth_used_raw / 1000000000
+                return round(float(bandwidth_used_gb), 2)
+        # bandwidth_ingress
+        if self.entity_description.key == "bandwidth_ingress":
+            bandwidth_used_raw = self.coordinator.data["satellites"].get(
+                "ingressSummary"
             )
             if bandwidth_used_raw is not None:
                 bandwidth_used_gb = bandwidth_used_raw / 1000000000
