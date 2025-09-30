@@ -21,98 +21,98 @@ if TYPE_CHECKING:
 # Define all sensors here
 ENTITY_DESCRIPTIONS: tuple[SensorEntityDescription, ...] = (
     SensorEntityDescription(
-        key="diskspace_available",
+        key="storj_diskspace_available",
         name="Diskspace Total",
         native_unit_of_measurement="GB",
         icon="mdi:harddisk",
     ),
     SensorEntityDescription(
-        key="diskspace_used",
+        key="storj_diskspace_used",
         name="Diskspace Used",
         native_unit_of_measurement="GB",
         icon="mdi:harddisk",
     ),
     SensorEntityDescription(
-        key="diskspace_trash",
+        key="storj_diskspace_trash",
         name="Diskspace Trash",
         native_unit_of_measurement="GB",
         icon="mdi:harddisk",
     ),
     SensorEntityDescription(
-        key="diskspace_free",
+        key="storj_diskspace_free",
         name="Diskspace Free",
         native_unit_of_measurement="GB",
         icon="mdi:harddisk",
     ),
     SensorEntityDescription(
-        key="average_usage_bytes",
+        key="storj_average_usage_bytes",
         name="Average Disk Space Used This Month",
         native_unit_of_measurement="GB",
         icon="mdi:harddisk",
     ),
     SensorEntityDescription(
-        key="disk_use_percentage",
+        key="storj_disk_use_percentage",
         name="Disk Use Percentage",
         native_unit_of_measurement="%",
         icon="mdi:harddisk",
     ),
     SensorEntityDescription(
-        key="nodeid",
+        key="storj_nodeid",
         name="Node ID",
         icon="mdi:eye",
     ),
     SensorEntityDescription(
-        key="wallet",
+        key="storj_wallet",
         name="Wallet",
         icon="mdi:wallet",
     ),
     SensorEntityDescription(
-        key="quic",
+        key="storj_quic",
         name="QUIC",
         icon="mdi:eye",
     ),
     SensorEntityDescription(
-        key="uptime",
+        key="storj_uptime",
         name="Uptime",
         icon="mdi:eye",
     ),
     SensorEntityDescription(
-        key="version",
+        key="storj_version",
         name="Version",
         icon="mdi:eye",
     ),
     SensorEntityDescription(
-        key="bandwidth_used",
+        key="storj_bandwidth_used",
         name="Bandwidth used this month",
         native_unit_of_measurement="GB",
         icon="mdi:chart-line",
     ),
     SensorEntityDescription(
-        key="bandwidth_egress",
+        key="storj_bandwidth_egress",
         name="Bandwidth Egress this month",
         native_unit_of_measurement="GB",
         icon="mdi:chart-line",
     ),
     SensorEntityDescription(
-        key="bandwidth_ingress",
+        key="storj_bandwidth_ingress",
         name="Bandwidth Ingress this month",
         native_unit_of_measurement="GB",
         icon="mdi:chart-line",
     ),
     SensorEntityDescription(
-        key="current_month_payout",
+        key="storj_current_month_payout",
         name="Estimated earning this month",
         native_unit_of_measurement="$",
         icon="mdi:currency-usd",
     ),
     SensorEntityDescription(
-        key="current_month_held",
+        key="storj_current_month_held",
         name="Held back this month",
         native_unit_of_measurement="$",
         icon="mdi:currency-usd",
     ),
     SensorEntityDescription(
-        key="current_month_pay_total",
+        key="storj_current_month_pay_total",
         name="Gross total this month",
         native_unit_of_measurement="$",
         icon="mdi:currency-usd",
@@ -171,20 +171,20 @@ class IntegrationBlueprintSensor(IntegrationBlueprintEntity, SensorEntity):
             .get("held")
         )
         # ---
-        if self.entity_description.key == "diskspace_available":
+        if self.entity_description.key == "storj_diskspace_available":
             return round(float(disk_available / 1000000000), 2)
         # ---
-        if self.entity_description.key == "diskspace_used":
+        if self.entity_description.key == "storj_diskspace_used":
             return round(float(disk_used / 1000000000), 2)
         # ---
-        if self.entity_description.key == "diskspace_trash":
+        if self.entity_description.key == "storj_diskspace_trash":
             return round(float(disk_trash / 1000000000), 2)
         # ---
-        if self.entity_description.key == "diskspace_free":
+        if self.entity_description.key == "storj_diskspace_free":
             disk_free = disk_available - disk_used - disk_trash
             return round(float(disk_free / 1000000000), 2)
         # ---
-        if self.entity_description.key == "average_usage_bytes":
+        if self.entity_description.key == "storj_average_usage_bytes":
             average_usage_bytes_raw = self.coordinator.data["satellites"].get(
                 "averageUsageBytes"
             )
@@ -192,17 +192,17 @@ class IntegrationBlueprintSensor(IntegrationBlueprintEntity, SensorEntity):
                 average_usage_bytes_gb = average_usage_bytes_raw / 1000000000
                 return round(float(average_usage_bytes_gb), 2)
         # ---
-        if self.entity_description.key == "disk_use_percentage":
+        if self.entity_description.key == "storj_disk_use_percentage":
             disk_used_percent = ((disk_used + disk_trash) / disk_available) * 100
             return round(float(disk_used_percent), 2)
         # ---
-        if self.entity_description.key == "wallet":
+        if self.entity_description.key == "storj_wallet":
             return self.coordinator.data["sno"].get("wallet")
         # ---
-        if self.entity_description.key == "quic":
+        if self.entity_description.key == "storj_quic":
             return self.coordinator.data["sno"].get("quicStatus")
         # ---
-        if self.entity_description.key == "uptime":
+        if self.entity_description.key == "storj_uptime":
             started_at_str = self.coordinator.data["sno"].get("startedAt")
             started_at = datetime.fromisoformat(started_at_str.replace("Z", "+00:00"))
             now = datetime.now(timezone.utc)
@@ -212,10 +212,10 @@ class IntegrationBlueprintSensor(IntegrationBlueprintEntity, SensorEntity):
             minutes, _ = divmod(remainder, 60)
             return f"{days}d {hours}h {minutes}m"
         # ---
-        if self.entity_description.key == "version":
+        if self.entity_description.key == "storj_version":
             return self.coordinator.data["sno"].get("version")
         # ---
-        if self.entity_description.key == "bandwidth_used":
+        if self.entity_description.key == "storj_bandwidth_used":
             bandwidth_used_raw = (
                 self.coordinator.data["sno"].get("bandwidth", {}).get("used")
             )
@@ -223,7 +223,7 @@ class IntegrationBlueprintSensor(IntegrationBlueprintEntity, SensorEntity):
                 bandwidth_used_gb = bandwidth_used_raw / 1000000000
                 return round(float(bandwidth_used_gb), 2)
         # ---
-        if self.entity_description.key == "bandwidth_egress":
+        if self.entity_description.key == "storj_bandwidth_egress":
             bandwidth_used_raw = self.coordinator.data["satellites"].get(
                 "egressSummary"
             )
@@ -231,7 +231,7 @@ class IntegrationBlueprintSensor(IntegrationBlueprintEntity, SensorEntity):
                 bandwidth_used_gb = bandwidth_used_raw / 1000000000
                 return round(float(bandwidth_used_gb), 2)
         # ---
-        if self.entity_description.key == "bandwidth_ingress":
+        if self.entity_description.key == "storj_bandwidth_ingress":
             bandwidth_used_raw = self.coordinator.data["satellites"].get(
                 "ingressSummary"
             )
@@ -239,16 +239,16 @@ class IntegrationBlueprintSensor(IntegrationBlueprintEntity, SensorEntity):
                 bandwidth_used_gb = bandwidth_used_raw / 1000000000
                 return round(float(bandwidth_used_gb), 2)
         # ---
-        if self.entity_description.key == "nodeid":
+        if self.entity_description.key == "storj_nodeid":
             return self.coordinator.data["sno"].get("nodeID")
         # ---
-        if self.entity_description.key == "current_month_payout":
+        if self.entity_description.key == "storj_current_month_payout":
             return round(float(payout), 2)
         # ---
-        if self.entity_description.key == "current_month_held":
+        if self.entity_description.key == "storj_current_month_held":
             return round(float(held), 2)
         # ---
-        if self.entity_description.key == "current_month_pay_total":
+        if self.entity_description.key == "storj_current_month_pay_total":
             pay_total = payout + held
             return round(float(pay_total), 2)
         return None
