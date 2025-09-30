@@ -52,8 +52,9 @@ Uses the api endpoints provided by your storj node.
 
 Used api paths:
 ```
-- http://\<node ip address>:14002/api/sno/
-- http://\<node ip address>:14002/api/sno/estimated-payout
-- http://\<node ip address>:14002/api/sno/satellites
+http://\<node ip address>:14002/api/sno/
+http://\<node ip address>:14002/api/sno/estimated-payout
+http://\<node ip address>:14002/api/sno/satellites
 ```
+
 
