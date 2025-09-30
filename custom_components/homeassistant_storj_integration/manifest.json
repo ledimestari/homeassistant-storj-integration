@@ -1,6 +1,6 @@
 {
   "domain": "homeassistant-storj-integration",
-  "name": "Storj",
+  "name": "Storj node integration",
   "codeowners": [
     "@ledimestari"
   ],
