@@ -75,6 +75,18 @@ ENTITY_DESCRIPTIONS: tuple[SensorEntityDescription, ...] = (
         native_unit_of_measurement="GB",
         icon="mdi:chart-line",
     ),
+    SensorEntityDescription(
+        key="bandwidth_egress",
+        name="Bandwidth used this month",
+        native_unit_of_measurement="GB",
+        icon="mdi:chart-line",
+    ),
+    SensorEntityDescription(
+        key="bandwidth_ingress",
+        name="Bandwidth used this month",
+        native_unit_of_measurement="GB",
+        icon="mdi:chart-line",
+    ),
 )
 
 
@@ -113,25 +125,33 @@ class IntegrationBlueprintSensor(IntegrationBlueprintEntity, SensorEntity):
     @property
     def native_value(self) -> str | None:
         """Return the native value depending on the sensor type."""
-        disk_available = self.coordinator.data.get("diskSpace", {}).get("available")
-        disk_used = self.coordinator.data.get("diskSpace", {}).get("used")
-        disk_trash = self.coordinator.data.get("diskSpace", {}).get("trash")
-
+        disk_available = (
+            self.coordinator.data["sno"].get("diskSpace", {}).get("available")
+        )
+        disk_used = self.coordinator.data["sno"].get("diskSpace", {}).get("used")
+        disk_trash = self.coordinator.data["sno"].get("diskSpace", {}).get("trash")
+        # Diskspace
         if self.entity_description.key == "diskspace_available":
             return round(float(disk_available / 1000000000), 2)
+        # disk used
         if self.entity_description.key == "diskspace_used":
             return round(float(disk_used / 1000000000), 2)
+        # disk trash
         if self.entity_description.key == "diskspace_trash":
             return round(float(disk_trash / 1000000000), 2)
+        # disk free
         if self.entity_description.key == "diskspace_free":
             disk_free = disk_available - disk_used - disk_trash
             return round(float(disk_free / 1000000000), 2)
+        # ---
         if self.entity_description.key == "wallet":
-            return self.coordinator.data.get("wallet")
+            return self.coordinator.data["sno"].get("wallet")
+        # ---
         if self.entity_description.key == "quic":
-            return self.coordinator.data.get("quicStatus")
+            return self.coordinator.data["sno"].get("quicStatus")
+        # ---
         if self.entity_description.key == "uptime":
-            started_at_str = self.coordinator.data.get("startedAt")
+            started_at_str = self.coordinator.data["sno"].get("startedAt")
             started_at = datetime.fromisoformat(started_at_str.replace("Z", "+00:00"))
             now = datetime.now(timezone.utc)
             uptime = now - started_at
@@ -139,13 +159,18 @@ class IntegrationBlueprintSensor(IntegrationBlueprintEntity, SensorEntity):
             hours, remainder = divmod(uptime.seconds, 3600)
             minutes, _ = divmod(remainder, 60)
             return f"{days}d {hours}h {minutes}m"
+        # ---
         if self.entity_description.key == "version":
-            return self.coordinator.data.get("version")
+            return self.coordinator.data["sno"].get("version")
+        # ---
         if self.entity_description.key == "bandwidth_used":
-            bandwidth_used_raw = self.coordinator.data.get("bandwidth", {}).get("used")
+            bandwidth_used_raw = (
+                self.coordinator.data["sno"].get("bandwidth", {}).get("used")
+            )
             if bandwidth_used_raw is not None:
                 bandwidth_used_gb = bandwidth_used_raw / 1000000000
                 return round(float(bandwidth_used_gb), 2)
+        # ---
         if self.entity_description.key == "nodeid":
-            return self.coordinator.data.get("nodeID")
+            return self.coordinator.data["sno"].get("nodeID")
         return None

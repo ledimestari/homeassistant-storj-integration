@@ -49,11 +49,11 @@ class IntegrationBlueprintApiClient:
         self._port = port
         self._session = session
 
-    async def async_get_data(self) -> Any:
+    async def async_get_data(self, path: str = "/api/sno/") -> Any:
         """Get data from the API."""
         return await self._api_wrapper(
             method="get",
-            url=f"http://{self._host}:{int(self._port)}/api/sno/",
+            url=f"http://{self._host}:{int(self._port)}{path}",
         )
 
     #    async def async_set_title(self, value: str) -> Any:
