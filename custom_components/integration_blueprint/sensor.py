@@ -243,12 +243,12 @@ class IntegrationBlueprintSensor(IntegrationBlueprintEntity, SensorEntity):
             return self.coordinator.data["sno"].get("nodeID")
         # ---
         if self.entity_description.key == "storj_current_month_payout":
-            return round(float(payout), 2)
+            return round(float(payout / 100), 2)
         # ---
         if self.entity_description.key == "storj_current_month_held":
-            return round(float(held), 2)
+            return round(float(held / 100), 2)
         # ---
         if self.entity_description.key == "storj_current_month_pay_total":
             pay_total = payout + held
-            return round(float(pay_total), 2)
+            return round(float(pay_total / 100), 2)
         return None
