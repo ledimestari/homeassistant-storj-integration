@@ -29,10 +29,14 @@ class BlueprintDataUpdateCoordinator(DataUpdateCoordinator):
 
             sno_data = await client.async_get_data("/api/sno/")
             satellites_data = await client.async_get_data("/api/sno/satellites")
+            estimated_payout_data = await client.async_get_data(
+                "/api/sno/estimated-payout"
+            )
 
-            return {
+            return {  # noqa: TRY300
                 "sno": sno_data,
                 "satellites": satellites_data,
+                "estimated-payout": estimated_payout_data,
             }
 
         except IntegrationBlueprintApiClientAuthenticationError as exception:
