@@ -4,7 +4,8 @@ A custom homeassistant integration to read statistics from a storj storage node 
 
 ## Example card
 
-<img width="500" alt="image" src="https://github.com/user-attachments/assets/6dc164d4-f0e7-4114-806a-df93d9748a3e" />
+<img width="500" alt="image" src="https://github.com/user-attachments/assets/e72513fe-89a8-4168-9f55-042df6f35ca6" />
+
 
 The graphs should get more interesting over time.
 
@@ -66,6 +67,7 @@ http://\<node ip address>:14002/api/sno/
 http://\<node ip address>:14002/api/sno/estimated-payout
 http://\<node ip address>:14002/api/sno/satellites
 ```
+
 
 
 
