@@ -6,8 +6,6 @@ A custom homeassistant integration to read statistics from a storj storage node.
 
 <img width="500" alt="image" src="https://github.com/user-attachments/assets/6dc164d4-f0e7-4114-806a-df93d9748a3e" />
 
-This integration only reads and does not not provide any switches.
-
 ## Setup
 
 <img width="500" alt="image" src="https://github.com/user-attachments/assets/6cd58485-69c1-4af4-88c3-0f2d9367a1ac" />
@@ -17,6 +15,8 @@ Setup is simple and only needs the IP-address (e.g. 192.168.1.123) and port of y
 Default port 14002 provided as a default value.
 
 ## Features
+
+This integration only reads data and does not not provide any switches.
 
 Provided sensors:
 
@@ -54,3 +54,4 @@ Used api paths:
 - http://\<node ip address>:14002/api/sno/
 - http://\<node ip address>:14002/api/sno/estimated-payout
 - http://\<node ip address>:14002/api/sno/satellites  
+
