@@ -64,7 +64,7 @@ class BlueprintFlowHandler(config_entries.ConfigFlow, domain=DOMAIN):
                     ),
                     vol.Required(
                         CONF_PORT,
-                        default=(user_input or {}).get(CONF_PORT, 8080),
+                        default=(user_input or {}).get(CONF_PORT, 14002),
                     ): selector.NumberSelector(
                         selector.NumberSelectorConfig(
                             min=1,
