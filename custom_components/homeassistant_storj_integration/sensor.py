@@ -59,7 +59,7 @@ ENTITY_DESCRIPTIONS: tuple[SensorEntityDescription, ...] = (
     SensorEntityDescription(
         key="storj_nodeid",
         name="Node ID",
-        icon="mdi:eye",
+        icon="mdi:identifier",
     ),
     SensorEntityDescription(
         key="storj_wallet",
@@ -240,6 +240,7 @@ class IntegrationBlueprintSensor(IntegrationBlueprintEntity, SensorEntity):
                 return round(float(bandwidth_used_gb), 2)
         # ---
         if self.entity_description.key == "storj_nodeid":
+            # return "abc123notrealf7c84e9d50a3a9e6a4370f7f5c8a92e5e983ef"
             return self.coordinator.data["sno"].get("nodeID")
         # ---
         if self.entity_description.key == "storj_current_month_payout":
