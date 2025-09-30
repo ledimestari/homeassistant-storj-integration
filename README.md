@@ -6,7 +6,17 @@ A custom homeassistant integration to read statistics from a storj storage node 
 
 <img width="500" alt="image" src="https://github.com/user-attachments/assets/6dc164d4-f0e7-4114-806a-df93d9748a3e" />
 
+The graphs should get more interesting over time.
+
 ## Setup
+### Manual
+Copy the "homeassistant_storj_integration" directory into the "custom_components" directory of your homeassistant install.
+
+### HACS
+Soon to be possible to install via HACS as well.
+
+### Configuration
+After installation, you'll be able to setup your device in the gui like this:
 
 <img width="500" alt="image" src="https://github.com/user-attachments/assets/6cd58485-69c1-4af4-88c3-0f2d9367a1ac" />
 
@@ -16,7 +26,7 @@ Default port 14002 provided as a default value.
 
 ## Features
 
-This integration only reads data and does not not provide any switches.
+This integration only reads data and does not not provide any actionable switches.
 
 Provided sensors:
 
@@ -38,7 +48,7 @@ Provided sensors:
 - Held back this month
 - Gross total this month
 
-Features missing for now:
+Potential features missing for now:
 
 - Suspension, Audit and Online scores for each satellite
 - Total payout history
@@ -56,6 +66,9 @@ http://\<node ip address>:14002/api/sno/
 http://\<node ip address>:14002/api/sno/estimated-payout
 http://\<node ip address>:14002/api/sno/satellites
 ```
+
+
+
 
 
 
