@@ -1,6 +1,15 @@
 # Homeassistant Storj Node statistics
 
-- homeassistant-storj-integration
+A custom homeassistant integration to read statistics from a storj storage node.
+
+<img height="700" alt="image" src="https://github.com/user-attachments/assets/6dc164d4-f0e7-4114-806a-df93d9748a3e" />
+
+Uses the api endpoints provided by your storj node. 
+
+Used api paths:
+- http://\<node ip address>:14002/api/sno/
+- http://\<node ip address>:14002/api/sno/estimated-payout
+- http://\<node ip address>:14002/api/sno/satellites
 
 Provided sensors:
 
@@ -21,5 +30,3 @@ Provided sensors:
 - Estimated earning this month
 - Held back this month
 - Gross total this month
-
-WIP
