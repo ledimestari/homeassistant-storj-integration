@@ -25,7 +25,16 @@ class BlueprintDataUpdateCoordinator(DataUpdateCoordinator):
     async def _async_update_data(self) -> Any:
         """Update data via library."""
         try:
-            return await self.config_entry.runtime_data.client.async_get_data()
+            client = self.config_entry.runtime_data.client
+
+            sno_data = await client.async_get_data("/api/sno/")
+            satellites_data = await client.async_get_data("/api/sno/satellites")
+
+            return {
+                "sno": sno_data,
+                "satellites": satellites_data,
+            }
+
         except IntegrationBlueprintApiClientAuthenticationError as exception:
             raise ConfigEntryAuthFailed(exception) from exception
         except IntegrationBlueprintApiClientError as exception:
