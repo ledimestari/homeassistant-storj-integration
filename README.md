@@ -1,6 +1,6 @@
 # Homeassistant Storj Node statistics
 
-A custom homeassistant integration to read statistics from a storj storage node.
+A custom homeassistant integration to read statistics from a storj storage node using json data provided by the node.
 
 ## Example card
 
@@ -10,7 +10,7 @@ A custom homeassistant integration to read statistics from a storj storage node.
 
 <img width="500" alt="image" src="https://github.com/user-attachments/assets/6cd58485-69c1-4af4-88c3-0f2d9367a1ac" />
 
-Setup is simple and only needs the IP-address (e.g. 192.168.1.123) and port of your node server.
+Setup is simple and only needs the IP-address (e.g. 192.168.1.123) and the port of your node server.
 
 Default port 14002 provided as a default value.
 
@@ -48,7 +48,7 @@ Features missing for now:
 
 ## Backend
 
-Uses the api endpoints provided by your storj node. 
+This integration uses the api endpoints provided by your storj node, you can find the used json formatted data from the paths below.
 
 Used api paths:
 ```
@@ -56,5 +56,6 @@ http://\<node ip address>:14002/api/sno/
 http://\<node ip address>:14002/api/sno/estimated-payout
 http://\<node ip address>:14002/api/sno/satellites
 ```
+
 
 
