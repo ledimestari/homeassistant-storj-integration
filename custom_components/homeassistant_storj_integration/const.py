@@ -4,5 +4,5 @@ from logging import Logger, getLogger
 
 LOGGER: Logger = getLogger(__package__)
 
-DOMAIN = "homeassistant-storj-integration"
+DOMAIN = "homeassistant_storj_integration"
 ATTRIBUTION = "Data provided by http://jsonplaceholder.typicode.com/"
