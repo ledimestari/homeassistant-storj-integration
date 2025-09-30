@@ -26,7 +26,7 @@ Default port 14002 provided as a default value.
 
 ## Features
 
-This integration only reads data and does not not provide any switches.
+This integration only reads data and does not not provide any actionable switches.
 
 Provided sensors:
 
@@ -66,6 +66,7 @@ http://\<node ip address>:14002/api/sno/
 http://\<node ip address>:14002/api/sno/estimated-payout
 http://\<node ip address>:14002/api/sno/satellites
 ```
+
 
 
 
