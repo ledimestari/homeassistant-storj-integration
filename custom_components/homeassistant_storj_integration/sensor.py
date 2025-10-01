@@ -17,6 +17,11 @@ if TYPE_CHECKING:
     from .coordinator import BlueprintDataUpdateCoordinator
     from .data import IntegrationBlueprintConfigEntry
 
+    # Store host for easier use
+    host = (
+        coordinator.config_entry.data.get("host", "unknown").replace(".", "_").lower()
+    )
+    self._host = host
 
 # Define all sensors here
 ENTITY_DESCRIPTIONS: tuple[SensorEntityDescription, ...] = (
@@ -146,11 +151,19 @@ class IntegrationBlueprintSensor(IntegrationBlueprintEntity, SensorEntity):
         super().__init__(coordinator)
         self.entity_description = entity_description
 
+        # Get first 6 chars of nodeID, fallback to "unknown"
+        node_id = self.coordinator.data.get("sno", {}).get("nodeID", "unknown")
+        self._prefix = node_id[:6].lower() if node_id else "unknown"
+
     @property
     def unique_id(self) -> str:
         """Return a unique ID for this sensor."""
-        # Combine the entry_id (integration instance) with the sensor key
-        return f"{self.coordinator.config_entry.entry_id}_{self.entity_description.key}"
+        return f"{self._prefix}_{self.entity_description.key}"
+
+    @property
+    def name(self) -> str:
+        """Return the name of this sensor."""
+        return f"{self._prefix} {self.entity_description.name}"
 
     @property
     def native_value(self) -> str | None:
