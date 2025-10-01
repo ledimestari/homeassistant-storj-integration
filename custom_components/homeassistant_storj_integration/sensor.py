@@ -163,7 +163,7 @@ class IntegrationBlueprintSensor(IntegrationBlueprintEntity, SensorEntity):
     @property
     def name(self) -> str:
         """Return the name of this sensor."""
-        return f"{self._prefix} {self.entity_description.name}"
+        return f"{self.entity_description.name}"
 
     @property
     def native_value(self) -> str | None:
