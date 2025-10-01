@@ -48,6 +48,8 @@ Provided sensors:
 - Held back this month
 - Gross total this month
 
+each sensor uses the first six characters of the Node ID as a prefix to differentiate them and make it so the names are not too generic.
+
 Potential features missing for now:
 
 - Suspension, Audit and Online scores for each satellite
@@ -66,6 +68,7 @@ http://\<node ip address>:14002/api/sno/
 http://\<node ip address>:14002/api/sno/estimated-payout
 http://\<node ip address>:14002/api/sno/satellites
 ```
+
 
 
 
