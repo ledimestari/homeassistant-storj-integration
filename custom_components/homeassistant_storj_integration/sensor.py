@@ -17,12 +17,6 @@ if TYPE_CHECKING:
     from .coordinator import BlueprintDataUpdateCoordinator
     from .data import IntegrationBlueprintConfigEntry
 
-    # Store host for easier use
-    host = (
-        coordinator.config_entry.data.get("host", "unknown").replace(".", "_").lower()
-    )
-    self._host = host
-
 # Define all sensors here
 ENTITY_DESCRIPTIONS: tuple[SensorEntityDescription, ...] = (
     SensorEntityDescription(
