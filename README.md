@@ -2,6 +2,8 @@
 
 A custom homeassistant integration ```storj_node_statistics``` to read statistics from a storj storage node using json data provided by the node.
 
+This integration is unofficial and not related to the official storj company at all. 
+
 ## Example card
 
 <img width="500" alt="image" src="https://github.com/user-attachments/assets/e72513fe-89a8-4168-9f55-042df6f35ca6" />
@@ -68,6 +70,7 @@ http://\<node ip address>:14002/api/sno/
 http://\<node ip address>:14002/api/sno/estimated-payout
 http://\<node ip address>:14002/api/sno/satellites
 ```
+
 
 
 
