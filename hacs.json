@@ -1,5 +1,5 @@
 {
-    "name": "homeassistant-storj-integration",
+    "name": "storj_node_statistics",
     "homeassistant": "2025.2.4",
     "hacs": "2.0.5"
 }
