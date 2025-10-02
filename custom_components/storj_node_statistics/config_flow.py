@@ -42,7 +42,7 @@ class BlueprintFlowHandler(config_entries.ConfigFlow, domain=DOMAIN):
                 LOGGER.exception("Unexpected error: %s", exception)
                 _errors["base"] = "unknown"
             else:
-                unique_id = f"{user_input[CONF_HOST]}:{user_input[CONF_PORT]}"
+                unique_id = f"{user_input[CONF_HOST]}:{int(user_input[CONF_PORT])}"
                 await self.async_set_unique_id(slugify(unique_id))
                 self._abort_if_unique_id_configured()
                 return self.async_create_entry(

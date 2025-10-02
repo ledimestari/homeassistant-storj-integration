@@ -5,6 +5,7 @@ from __future__ import annotations
 from typing import TYPE_CHECKING
 
 from homeassistant.components.sensor import SensorEntity, SensorEntityDescription
+from homeassistant.helpers.device_registry import DeviceInfo
 
 from .entity import IntegrationBlueprintEntity
 
@@ -158,6 +159,14 @@ class IntegrationBlueprintSensor(IntegrationBlueprintEntity, SensorEntity):
     def name(self) -> str:
         """Return the name of this sensor."""
         return f"{self._prefix} {self.entity_description.name}"
+
+    @property
+    def device_info(self) -> DeviceInfo:
+        """Return info for the device this sensor belongs to."""
+        return DeviceInfo(
+            identifiers={("integration_blueprint", self._prefix)},  # must be unique
+            name=f"node_{self._prefix}",
+        )
 
     @property
     def native_value(self) -> str | None:
