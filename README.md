@@ -15,7 +15,10 @@ This is somewhat the view I'm using, the graphs should get more interesting over
 Copy the "homeassistant_storj_integration" directory into the "custom_components" directory of your homeassistant install.
 
 ### HACS
-Soon to be possible to install via HACS as well.
+
+Click the button below to install via HACS. 
+
+[![Open your Home Assistant instance and open a repository inside the Home Assistant Community Store.](https://my.home-assistant.io/badges/hacs_repository.svg)](https://my.home-assistant.io/redirect/hacs_repository/?owner=ledimestari&repository=homeassistant-storj-integration&category=integration)
 
 ### Configuration
 After installation, you'll be able to setup your device in the gui like this:
@@ -70,6 +73,7 @@ http://\<node ip address>:14002/api/sno/
 http://\<node ip address>:14002/api/sno/estimated-payout
 http://\<node ip address>:14002/api/sno/satellites
 ```
+
 
 
 
