@@ -2,7 +2,7 @@
 
 A custom homeassistant integration ```storj_node_statistics``` to read statistics from a storj storage node using json data provided by the node.
 
-This integration is unofficial and not related to the official storj company at all. 
+This integration is unofficial and not related to the official storj company at all.
 
 ## Example card
 
@@ -13,7 +13,7 @@ This is somewhat the view I'm using, the graphs should get more interesting over
 ## Setup
 ### HACS (recommended)
 
-Click the button below to install via HACS. 
+Click the button below to install via HACS.
 
 [![Open your Home Assistant instance and open a repository inside the Home Assistant Community Store.](https://my.home-assistant.io/badges/hacs_repository.svg)](https://my.home-assistant.io/redirect/hacs_repository/?owner=ledimestari&repository=homeassistant-storj-integration&category=integration)
 
@@ -52,12 +52,13 @@ Provided sensors:
 - Estimated earning this month
 - Held back this month
 - Gross total this month
+- Average online score of all satellites
 
 each sensor uses the first six characters of the Node ID as a prefix to the key value, e.g. ```sensor.abc123_disk_use_percentage```.
 
 Potential features missing for now:
 
-- Suspension, Audit and Online scores for each satellite
+- Suspension, Audit and Online scores for each satellite separate
 - Total payout history
 - Disk space overused
 - Time since last contact

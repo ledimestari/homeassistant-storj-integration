@@ -117,6 +117,12 @@ ENTITY_DESCRIPTIONS: tuple[SensorEntityDescription, ...] = (
         native_unit_of_measurement="$",
         icon="mdi:currency-usd",
     ),
+    SensorEntityDescription(
+        key="storj_satellite_avg_online",
+        name="Average Online score of all satellites",
+        native_unit_of_measurement="%",
+        icon="mdi:percent",
+    ),
 )
 
 
@@ -268,4 +274,14 @@ class IntegrationBlueprintSensor(IntegrationBlueprintEntity, SensorEntity):
         if self.entity_description.key == "storj_current_month_pay_total":
             pay_total = payout + held
             return round(float(pay_total / 100), 2)
+        # ---
+        if self.entity_description.key == "storj_satellite_avg_online":
+            avg_online_score = 0.0
+            audits = self.coordinator.data["satellites"].get("audits", [])
+            avg_online_score = (
+                sum(a["onlineScore"] for a in audits) / len(audits) * 100
+                if audits
+                else 0
+            )
+            return round(float(avg_online_score), 2)
         return None
