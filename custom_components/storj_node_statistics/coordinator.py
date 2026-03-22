@@ -32,11 +32,19 @@ class BlueprintDataUpdateCoordinator(DataUpdateCoordinator):
             estimated_payout_data = await client.async_get_data(
                 "/api/sno/estimated-payout"
             )
+            held_history_data = await client.async_get_data(
+                "/api/heldamount/held-history"
+            )
+            paystubs_data = await client.async_get_data(
+                "/api/heldamount/paystubs/2000-1/2100-1"
+            )
 
             return {  # noqa: TRY300
                 "sno": sno_data,
                 "satellites": satellites_data,
                 "estimated-payout": estimated_payout_data,
+                "held_history": held_history_data,
+                "paystubs": paystubs_data,
             }
 
         except IntegrationBlueprintApiClientAuthenticationError as exception:

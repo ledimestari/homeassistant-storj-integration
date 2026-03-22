@@ -123,6 +123,18 @@ ENTITY_DESCRIPTIONS: tuple[SensorEntityDescription, ...] = (
         native_unit_of_measurement="%",
         icon="mdi:percent",
     ),
+    SensorEntityDescription(
+        key="storj_total_held",
+        name="Total held amount",
+        native_unit_of_measurement="$",
+        icon="mdi:currency-usd",
+    ),
+    SensorEntityDescription(
+        key="storj_total_earned",
+        name="Total earned amount",
+        native_unit_of_measurement="$",
+        icon="mdi:currency-usd",
+    ),
 )
 
 
@@ -284,4 +296,15 @@ class IntegrationBlueprintSensor(IntegrationBlueprintEntity, SensorEntity):
                 else 0
             )
             return round(float(avg_online_score), 2)
+        # ---
+        if self.entity_description.key == "storj_total_held":
+            data = self.coordinator.data["held_history"]
+            total_held = sum(item["totalHeld"] for item in data)
+            return round(float(total_held / 1000000), 2)
+        # ---
+        if self.entity_description.key == "storj_total_earned":
+            data = self.coordinator.data["paystubs"]
+            total_earned = sum(item["paid"] for item in data)
+            return round(float(total_earned / 1000000), 2)
+        # ---
         return None
