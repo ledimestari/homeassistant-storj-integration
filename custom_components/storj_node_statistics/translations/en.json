@@ -2,7 +2,7 @@
     "config": {
         "step": {
             "user": {
-                "description": "If you need help with the configuration have a look here: https://github.com/ledimestari/homeassistant-storj-integration",
+                "description": "If you need help with the configuration have a look here: github.com/ledimestari/homeassistant-storj-integration",
                 "data": {
                     "host": "host",
                     "port": "port"
