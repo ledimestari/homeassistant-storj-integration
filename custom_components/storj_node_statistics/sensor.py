@@ -189,6 +189,7 @@ class IntegrationBlueprintSensor(IntegrationBlueprintEntity, SensorEntity):
     @property
     def native_value(self) -> str | None:
         """Return the native value depending on the sensor type."""
+        disk_total = self.coordinator.data["sno"].get("diskSpace", {}).get("allocated")
         disk_available = (
             self.coordinator.data["sno"].get("diskSpace", {}).get("available")
         )
@@ -206,7 +207,7 @@ class IntegrationBlueprintSensor(IntegrationBlueprintEntity, SensorEntity):
         )
         # ---
         if self.entity_description.key == "storj_diskspace_available":
-            return round(float(disk_available / 1000000000), 2)
+            return round(float(disk_total / 1000000000), 2)
         # ---
         if self.entity_description.key == "storj_diskspace_used":
             return round(float(disk_used / 1000000000), 2)
@@ -215,7 +216,7 @@ class IntegrationBlueprintSensor(IntegrationBlueprintEntity, SensorEntity):
             return round(float(disk_trash / 1000000000), 2)
         # ---
         if self.entity_description.key == "storj_diskspace_free":
-            disk_free = disk_available - disk_used - disk_trash
+            disk_free = disk_available
             return round(float(disk_free / 1000000000), 2)
         # ---
         if self.entity_description.key == "storj_average_usage_bytes":
@@ -227,7 +228,7 @@ class IntegrationBlueprintSensor(IntegrationBlueprintEntity, SensorEntity):
                 return round(float(average_usage_bytes_gb), 2)
         # ---
         if self.entity_description.key == "storj_disk_use_percentage":
-            disk_used_percent = ((disk_used + disk_trash) / disk_available) * 100
+            disk_used_percent = ((disk_total - disk_available) / disk_total) * 100
             return round(float(disk_used_percent), 2)
         # ---
         if self.entity_description.key == "storj_wallet":
