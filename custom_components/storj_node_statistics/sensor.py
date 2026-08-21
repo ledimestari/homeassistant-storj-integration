@@ -2,14 +2,13 @@
 
 from __future__ import annotations
 
+from datetime import datetime, timezone
 from typing import TYPE_CHECKING
 
 from homeassistant.components.sensor import SensorEntity, SensorEntityDescription
 from homeassistant.helpers.device_registry import DeviceInfo
 
 from .entity import IntegrationBlueprintEntity
-
-from datetime import datetime, timezone
 
 if TYPE_CHECKING:
     from homeassistant.core import HomeAssistant
