@@ -39,7 +39,7 @@ class BlueprintDataUpdateCoordinator(DataUpdateCoordinator):
                 "/api/heldamount/paystubs/2000-1/2100-1"
             )
 
-            return {  # noqa: TRY300
+            return {
                 "sno": sno_data,
                 "satellites": satellites_data,
                 "estimated-payout": estimated_payout_data,
